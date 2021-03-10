@@ -1,7 +1,9 @@
 package com.bo.ke.myboke.config.shiro;
 
 import com.bo.ke.myboke.common.Const;
+import com.bo.ke.myboke.utils.RespUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpStatus;
@@ -27,16 +29,21 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
             executeLogin(request, response);
             return true;
         } catch (Exception e) {
-            throw new AuthenticationException("Token失效，请重新登录", e);
+            // throw new AuthenticationException("Token失效，请重新登录", e);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws AuthenticationException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
         String requestURI = ((HttpServletRequest) request).getRequestURI();
         log.info("请求路径：{}", requestURI);
         String jwt = httpServletRequest.getHeader(Const.AUTH);
+        if (StringUtils.isNotEmpty(jwt)) {
+            RespUtils.addHeader(resp, "erffg");
+        }
 
         WebToken webToken = new WebToken(jwt);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获

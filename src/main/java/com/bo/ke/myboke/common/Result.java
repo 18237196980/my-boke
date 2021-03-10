@@ -14,6 +14,10 @@ public class Result implements Serializable {
     private String msg;
     private Object data;
 
+    public static Result success() {
+        return new Result(1, null);
+    }
+
     public static Result success(Object data) {
         return new Result(1, data);
     }

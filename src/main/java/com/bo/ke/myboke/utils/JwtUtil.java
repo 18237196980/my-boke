@@ -29,7 +29,7 @@ public class JwtUtil {
     private static final String CLAIM_KEY_UID = "id";
     private static final String CLAIM_KEY_USERNAME = "username";
     private static final String secret = "161527841418433603825452153579";
-    private static final Long expiration = 60 * 60l; // 60l代表60s后jwt过期
+    private static final Long expiration = 24 * 60 * 60l; // 60l代表60s后jwt过期
 
     public static void main(String[] args) {
         Map<String, Object> claims = new HashMap<>();

@@ -51,7 +51,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken auth) throws AuthenticationException {
-        log.info("===============Shiro权限认证开始====");
+        log.info("===============权限认证开始====");
         WebToken jwt = (WebToken) auth;
         if (jwt.getCredentials() == null) {
             throw new AuthenticationException("token为空，请重新登录!");
