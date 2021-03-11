@@ -57,7 +57,7 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("token为空，请重新登录!");
         }
         String userId = JwtUtil.getIdFromToken(jwt.getCredentials() + "");
-        User user = userService.getById(userId);
+        User user = userService.get(userId);
         if (user == null) {
             throw new UnknownAccountException("未知用户");
         }

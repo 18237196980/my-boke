@@ -1,5 +1,6 @@
 package com.bo.ke.myboke.config;
 
+import com.ex.framework.util.SpringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -58,6 +59,16 @@ public class BeanConfig {
         mapper.setDateFormat(simpleDateFormat);
 
         return mapper;
+    }
+
+    /**
+     * 注册SpringUtils
+     *
+     * @return
+     */
+    @Bean
+    public SpringUtils springUtils() {
+        return new SpringUtils();
     }
 
 }

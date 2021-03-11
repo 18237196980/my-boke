@@ -16,6 +16,10 @@
     <properties>
         <java.version>1.8</java.version>
         <spring.shiro.version>1.6.0</spring.shiro.version>
+        <druid.version>1.1.14</druid.version>
+        <commons-collections.version>4.3</commons-collections.version>
+        <commons-io.version>2.6</commons-io.version>
+        <mybatis-plus.version>3.1.0</mybatis-plus.version>
     </properties>
     <dependencies>
         <dependency>
@@ -28,6 +32,44 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <!--&lt;!&ndash;基础包&ndash;&gt;
+        <dependency>
+            <groupId>com.ex.framework</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        &lt;!&ndash;数据包&ndash;&gt;
+        <dependency>
+            <groupId>com.ex.framework</groupId>
+            <artifactId>data</artifactId>
+            <version>1.0.0</version>
+        </dependency>-->
+
+        <!--基础包-->
+        <dependency>
+            <groupId>com.ex.framework</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/common.jar</systemPath>
+        </dependency>
+
+        <!--数据包-->
+        <dependency>
+            <groupId>com.ex.framework</groupId>
+            <artifactId>data</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/data.jar</systemPath>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -47,12 +89,13 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.2.0</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.2.0</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -75,6 +118,16 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
     </dependencies>
 

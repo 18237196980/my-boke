@@ -1,0 +1,77 @@
+server:
+  port: 8899
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/*
+
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  #json 时间戳统一转换
+  jackson:
+    date-format:   yyyy-MM-dd HH:mm:ss
+    time-zone:   GMT+8
+  aop:
+    proxy-target-class: true
+    auto: true
+  mvc:
+    static-path-pattern: /**
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 1234
+        allow:
+      web-stat-filter:
+        enabled: true
+      # 初始化大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+
+#mybatis plus 设置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 返回类型为Map,显示null对应的字段
+    call-setters-on-nulls: true
+    # 查询时，关闭关联对象即时加载以提高性能
+    lazy-loading-enabled: true
+    # 允许使用自定义的主键值，数据表的PK生成策略将被覆盖
+    use-generated-keys: true
+    # 给予被嵌套的resultMap以字段-属性的映射支持
+    auto-mapping-behavior: full
+    # 数据库超过25秒仍未响应则超时
+    default-statement-timeout: 25
+  # 自动扫描model目录
+  type-aliases-package: com.bo.ke.myboke.entity
+
+# 自定义配置
+zf:
+  light-down-mq: light_fo_down_tcp
+  door-down-mq: door_fo_down_tcp
