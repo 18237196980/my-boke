@@ -29,10 +29,10 @@ public class JwtUtil {
     private static final String CLAIM_KEY_UID = "id";
     private static final String CLAIM_KEY_USERNAME = "username";
     private static final String secret = "161527841418433603825452153579";
-    private static final Long expiration = 24 * 60 * 60l; // 60l代表60s后jwt过期
+    private static final Long expiration = 60l; // 60l代表60s后jwt过期
 
     public static void main(String[] args) {
-        Map<String, Object> claims = new HashMap<>();
+        /*Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_UID, "20192019");
         claims.put(CLAIM_KEY_USERNAME, "test");
         String token = createToken(claims);
@@ -59,15 +59,40 @@ public class JwtUtil {
             log.info("【请重新登陆】");
         }
 
+        String jwt = "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjIwMTgxMTA2MTU1NDE2MTk4MjQ5ODMzMjEiLCJleHAiOjE2MTU1MTQ2NDQsInVzZXJuYW1lIjoiYWRtaW4ifQ.ZOumVXihHFxjLprRlUnOPm2qEwjJL9PHpBbnclZZdjvb6mibCbJv5lQCNCCOvW3BPl349To-qF2pagvUCNN1MA";
+        long expired = getRemainingTime(jwt);
+        log.info("expired:"+expired);*/
+
+        /*User user = new User();
+        user.setId("2018110615541619824983321");
+        user.setUsername("admin");
+        String jwt = generateToken(user);
+        log.info("jwtjwt:"+jwt);*/
+
+        User user = new User();
+        user.setId("2018110615541619824983321");
+        user.setUsername("admin");
+        String jwt = generateToken(user);
+        log.info("jwt:" + jwt);
+
+
+        long remainingTime = getRemainingTime(jwt);
+
+        log.info("remainingTime:" + remainingTime);
+
+
+
     }
 
     /**
      * 生成JWT
      */
     public static String createToken(Map<String, Object> claims) {
+        Date date = generateExpirationDate();
+        log.info("date:" + date);
         return Jwts.builder()
                    .setClaims(claims)
-                   .setExpiration(generateExpirationDate())
+                   .setExpiration(date)
                    .signWith(SignatureAlgorithm.HS512, secret)
                    .compact();
     }

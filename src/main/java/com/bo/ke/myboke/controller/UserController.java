@@ -4,7 +4,7 @@ package com.bo.ke.myboke.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bo.ke.myboke.entity.User;
 import com.bo.ke.myboke.service.UserService;
-import com.bo.ke.myboke.utils.JwtUtil;
+import com.bo.ke.myboke.utils.JwtUtils;
 import com.bo.ke.myboke.utils.MD5Utils;
 import com.ex.framework.data.Record;
 import com.ex.framework.data.Result;
@@ -33,8 +33,10 @@ public class UserController {
 
     /**
      * 登陆 返回jwt
+     *
      * @param user
-     * @return*/
+     * @return
+     */
 
     @RequestMapping("login")
     public Object login(@RequestBody User user) {
@@ -57,23 +59,23 @@ public class UserController {
         String md5Pwd = MD5Utils.md5(user.getPassword());
         if (StringUtils.equals(md5Pwd, model.getPassword())) {
             // 登陆成功
-            String jwt = JwtUtil.generateToken(model);
+            String jwt = JwtUtils.generateToken(model);
             return Result.success(Record.build()
                                         .set("id", model.getId())
                                         .set("jwt", jwt)
                                         .set("username", model.getUsername())
                                         .set("avatar", model.getAvatar()));
-        }else {
+        } else {
             return Result.error("密码错误");
         }
     }
 
     @RequestMapping("getOne")
-    public Object getOne() {
+    public Result getOne() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         User one = userService.get(queryWrapper.eq("id", "2018110615541619824983321"));
 
-        return one;
+        return Result.success(one);
     }
 
 }

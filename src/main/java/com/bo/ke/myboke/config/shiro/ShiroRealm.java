@@ -1,9 +1,11 @@
 package com.bo.ke.myboke.config.shiro;
 
+import com.bo.ke.myboke.common.Const;
 import com.bo.ke.myboke.common.ShiroUser;
 import com.bo.ke.myboke.entity.User;
+import com.bo.ke.myboke.exception.CusException;
 import com.bo.ke.myboke.service.UserService;
-import com.bo.ke.myboke.utils.JwtUtil;
+import com.bo.ke.myboke.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -52,11 +54,10 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken auth) throws AuthenticationException {
         log.info("===============权限认证开始====");
+
         WebToken jwt = (WebToken) auth;
-        if (jwt.getCredentials() == null) {
-            throw new AuthenticationException("token为空，请重新登录!");
-        }
-        String userId = JwtUtil.getIdFromToken(jwt.getCredentials() + "");
+        String userId = JwtUtils.getElement(jwt.getCredentials()
+                                               .toString(), Const.ID);
         User user = userService.get(userId);
         if (user == null) {
             throw new UnknownAccountException("未知用户");

@@ -1,6 +1,7 @@
 package com.bo.ke.myboke.service;
 
 import com.bo.ke.myboke.entity.MBlog;
+import com.bo.ke.myboke.exception.CusException;
 import com.bo.ke.myboke.mapper.MBlogMapper;
 import com.bo.ke.myboke.utils.ShiroUtils;
 import com.ex.framework.base.BaseCRUDService;
