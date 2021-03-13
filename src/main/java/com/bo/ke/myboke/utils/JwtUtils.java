@@ -23,8 +23,8 @@ public class JwtUtils {
     private static String secretKey = "8972134584813456854613153254852";
     //使用BASE64加密后的Jwt的加密密钥
     private static final String BASE64_SECRET_KEY = TextCodec.BASE64.encode(secretKey);
-    //Token的过期时间，默认为一周(单位为毫秒)
-    private static long expirationTime = 10l;
+    //Token的过期时间
+    private static long expirationTime = 60l * 60 * 24 * 7; // 60l代表60秒
     //Token的加密算法，默认使用HS256
     private static SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
     // 存储用户id,用户username

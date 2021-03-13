@@ -1,8 +1,12 @@
 package com.bo.ke.myboke.config.shiro;
 
 import com.bo.ke.myboke.common.Const;
+import com.bo.ke.myboke.entity.User;
 import com.bo.ke.myboke.exception.CusException;
+import com.bo.ke.myboke.service.UserService;
 import com.bo.ke.myboke.utils.JwtUtils;
+import com.bo.ke.myboke.utils.RespUtils;
+import com.ex.framework.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -31,6 +35,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
     @Qualifier("handlerExceptionResolver")
     private HandlerExceptionResolver resolver;
 
+
     /**
      * 执行登录认证
      */
@@ -46,12 +51,12 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
     }
 
     @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws AuthenticationException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+        HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         String requestURI = ((HttpServletRequest) request).getRequestURI();
         log.info("请求路径：{}", requestURI);
-        String token = httpServletRequest.getHeader(Const.AUTH);
+        String token = req.getHeader(Const.AUTH);
 
         if (StringUtils.isEmpty(token)) {
             throw new AuthenticationException("token为空，请重新登录!");
@@ -62,9 +67,19 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
         log.info("是否过期:" + expired);
 
         if (expired) {
-            throw new CusException(-11, "token失效，请重新登陆！");
-            /** 通过HandlerExceptionResolver抛出可被全局异常处理捕获到的异常 **/
-            //resolver.resolveException(httpServletRequest, resp, null, new CusException(407, "token失效啦"));
+            // throw new CusException(-11, "token失效，请重新登陆！");
+            // 将错误信息封装在request中
+            req.setAttribute(Const.ERROR_MSG, "token失效，请重新登陆！");
+            // 请求转发
+            req.getRequestDispatcher("/dispatcher/-1")
+               .forward(request, response);
+        } else {
+            String uid = JwtUtils.getElement(token, Const.ID);
+            UserService userService = SpringUtils.getBean(UserService.class);
+            User user = userService.get(uid);
+            String new_jwt = JwtUtils.generateToken(user);
+
+            RespUtils.addHeader(resp, new_jwt);
         }
 
         WebToken webToken = new WebToken(token);
