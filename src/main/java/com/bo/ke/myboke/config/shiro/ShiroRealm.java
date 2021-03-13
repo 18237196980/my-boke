@@ -60,10 +60,10 @@ public class ShiroRealm extends AuthorizingRealm {
                                                .toString(), Const.ID);
         User user = userService.get(userId);
         if (user == null) {
-            throw new UnknownAccountException("未知用户");
+            throw new UnknownAccountException("用户不存在,请重新登陆！");
         }
         if (user.getStatus() == 0) {
-            throw new LockedAccountException("用户未激活");
+            throw new LockedAccountException("用户未激活,请重新登陆！");
         }
         ShiroUser shiroUser = new ShiroUser();
         BeanUtils.copyProperties(user, shiroUser);
