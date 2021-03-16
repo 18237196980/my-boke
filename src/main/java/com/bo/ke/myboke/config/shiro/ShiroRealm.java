@@ -6,6 +6,7 @@ import com.bo.ke.myboke.entity.User;
 import com.bo.ke.myboke.exception.CusException;
 import com.bo.ke.myboke.service.UserService;
 import com.bo.ke.myboke.utils.JwtUtils;
+import com.ex.framework.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -22,8 +23,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
     /**
      * 必须重写此方法，不然Shiro会报UnsupportedTokenException错
@@ -58,6 +59,8 @@ public class ShiroRealm extends AuthorizingRealm {
         WebToken jwt = (WebToken) auth;
         String userId = JwtUtils.getElement(jwt.getCredentials()
                                                .toString(), Const.ID);
+
+        UserService userService = SpringUtils.getBean(UserService.class);
         User user = userService.get(userId);
         if (user == null) {
             throw new UnknownAccountException("用户不存在,请重新登陆！");

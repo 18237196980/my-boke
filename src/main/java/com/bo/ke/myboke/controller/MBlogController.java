@@ -27,31 +27,31 @@ public class MBlogController extends BaseController {
     @Autowired
     MBlogService mBlogService;
 
-    @PostMapping("list")
-    public TableResult list(@RecordBody Record record) {
-        ExPage page = parseExPage(record);
-        ExPageResult<MBlog> pageResult = mBlogService.list(page, null);
-        return TableResult.success(pageResult);
-    }
-
-    @PostMapping("addEditBlog")
-    public Result addEditBlog(@RequestBody MBlog mBlog) {
-        try {
-            return mBlogService.addEditBlog(mBlog);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Result.error("操作失败");
-    }
-
-    @GetMapping("getBolgById")
-    public Result getBolgById(String id) {
-        try {
-            return Result.success(mBlogService.get(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Result.error("博客不存在");
-    }
+//    @PostMapping("list")
+//    public TableResult list(@RecordBody Record record) {
+//        ExPage page = parseExPage(record);
+//        ExPageResult<MBlog> pageResult = mBlogService.list(page, null);
+//        return TableResult.success(pageResult);
+//    }
+//
+//    @PostMapping("addEditBlog")
+//    public Result addEditBlog(@RequestBody MBlog mBlog) {
+//        try {
+//            return mBlogService.addEditBlog(mBlog);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return Result.error("操作失败");
+//    }
+//
+//    @GetMapping("getBolgById")
+//    public Result getBolgById(String id) {
+//        try {
+//            return Result.success(mBlogService.get(id));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return Result.error("博客不存在");
+//    }
 
 }

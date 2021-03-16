@@ -4,14 +4,9 @@ package com.bo.ke.myboke.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bo.ke.myboke.entity.User;
 import com.bo.ke.myboke.service.UserService;
-import com.bo.ke.myboke.utils.JwtUtils;
-import com.bo.ke.myboke.utils.MD5Utils;
-import com.ex.framework.data.Record;
 import com.ex.framework.data.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,24 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
  * @author
  * @since 2021-03-09
  */
-@RestController
+//@RestController
 @RequestMapping("/boke/user")
 @Slf4j
 public class UserController {
 
     @Autowired
     UserService userService;
+//
+//    @Autowired
+//    MBlogService mBlogService;
 
     /**
      * 登陆 返回jwt
      *
-     * @param user
      * @return
      */
 
     @RequestMapping("login")
-    public Object login(@RequestBody User user) {
-        if (StringUtils.isEmpty(user.getUsername())) {
+    public Object login() {
+
+        //userService.testTrans();
+        //mBlogService.addMblog();
+        return "kk";
+        /*if (StringUtils.isEmpty(user.getUsername())) {
             return Result.error("请输入用户名");
         }
         if (StringUtils.isEmpty(user.getPassword())) {
@@ -67,7 +68,7 @@ public class UserController {
                                         .set("avatar", model.getAvatar()));
         } else {
             return Result.error("密码错误");
-        }
+        }*/
     }
 
     @RequestMapping("getOne")
