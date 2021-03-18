@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class ShiroRealm extends AuthorizingRealm {
 
 //    @Autowired
-//    private UserService userService;
+//    private UserService userService; 不能注入，会优先创建bean,导致UserService事务无法生效 https://cloud.tencent.com/developer/article/1553589
 
     /**
      * 必须重写此方法，不然Shiro会报UnsupportedTokenException错
