@@ -38,8 +38,9 @@ public class ShiroConfig {
         filterChainDefinitions.put("/sys/captcha", "anon");
         filterChainDefinitions.put("/sys/randomImage/**", "anon");
         filterChainDefinitions.put("/sys/login", "anon");
+        filterChainDefinitions.put("/websocket/**", "anon");
 
-        filterChainDefinitions.put("/", "anon");
+        // filterChainDefinitions.put("/", "anon");
 
         // 静态资源
         filterChainDefinitions.put("/doc.html", "anon");

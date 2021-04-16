@@ -1,5 +1,6 @@
 package com.bo.ke.myboke.controller;
 
+import com.bo.ke.myboke.common.ShiroUser;
 import com.bo.ke.myboke.entity.User;
 import com.ex.framework.data.Record;
 import com.ex.framework.util.mapper.JsonMapper;
@@ -14,7 +15,7 @@ public abstract class BaseController {
      * @return
      */
     protected String getCurrentUserId() {
-        User user = getCurrentShiroUser();
+        ShiroUser user = getCurrentShiroUser();
         if (user == null) {
             return "";
         }
@@ -26,9 +27,9 @@ public abstract class BaseController {
      *
      * @return
      */
-    protected User getCurrentShiroUser() {
-        User user = (User) SecurityUtils.getSubject()
-                                        .getPrincipal();
+    protected ShiroUser getCurrentShiroUser() {
+        ShiroUser user = (ShiroUser) SecurityUtils.getSubject()
+                                                  .getPrincipal();
         return user;
     }
 

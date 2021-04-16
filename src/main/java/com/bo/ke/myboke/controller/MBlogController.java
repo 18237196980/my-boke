@@ -1,8 +1,11 @@
 package com.bo.ke.myboke.controller;
 
 
+import com.bo.ke.myboke.config.websocket.WebSocketServer;
 import com.bo.ke.myboke.entity.MBlog;
+import com.bo.ke.myboke.entity.User;
 import com.bo.ke.myboke.service.MBlogService;
+import com.bo.ke.myboke.service.UserService;
 import com.ex.framework.data.Record;
 import com.ex.framework.data.RecordBody;
 import com.ex.framework.data.Result;
@@ -11,6 +14,8 @@ import com.ex.framework.web.ExPageResult;
 import com.ex.framework.web.TableResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -26,6 +31,10 @@ public class MBlogController extends BaseController {
 
     @Autowired
     MBlogService mBlogService;
+    @Autowired
+    WebSocketServer socketServer;
+    @Autowired
+    UserService userService;
 
     @PostMapping("list")
     public TableResult list(@RecordBody Record record) {
@@ -47,6 +56,14 @@ public class MBlogController extends BaseController {
     @GetMapping("getBolgById")
     public Result getBolgById(String id) {
         try {
+            List<User> users = userService.list();
+            for (User user : users) {
+                if (!user.getId()
+                         .equals(getCurrentUserId())) {
+                    socketServer.sendInfo("我的id是:" + user.getId(), user.getId());
+                    break;
+                }
+            }
             return Result.success(mBlogService.get(id));
         } catch (Exception e) {
             e.printStackTrace();
